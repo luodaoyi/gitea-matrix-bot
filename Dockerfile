@@ -1,5 +1,4 @@
 FROM golang:alpine AS builder
-
 LABEL stage=gobuilder
 
 ENV CGO_ENABLED 1
@@ -14,8 +13,7 @@ ADD go.mod .
 ADD go.sum .
 RUN go mod download
 COPY . .
-RUN go build -a -installsuffix cgo -ldflags="-s -w"  -o /app/gitea-matrix-bot .
-
+RUN go build -ldflags="-s -w" -a -installsuffix cgo -o /app/gitea-matrix-bot .
 
 FROM alpine:latest  
 RUN apk --no-cache add ca-certificates
