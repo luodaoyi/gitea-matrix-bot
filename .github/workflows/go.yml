@@ -9,13 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: Extract branch name
-        run: |
-          export TAG_NAME=$(echo ${GITHUB_REF#refs/tags/})
-          echo "tag=$TAG_NAME" >> $GITHUB_OUTPUT
-        id: extract_branch
-
+      
       - name: xgo build
         uses: crazy-max/ghaction-xgo@v2
         with:
@@ -62,7 +56,6 @@ jobs:
           push: true
           tags: |
             ${{ steps.image-name.outputs.GHRC_IMAGE_NAME }}:latest
-            ${{ steps.image-name.outputs.GHRC_IMAGE_NAME }}:${{ steps.extract_branch.outputs.tag }}
 
       - name: Compress dist files
         run: |
