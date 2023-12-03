@@ -14,7 +14,7 @@ ADD go.mod .
 ADD go.sum .
 RUN go mod download
 COPY . .
-RUN go build -ldflags="-s -w" -o /app/main main.go
+RUN go build -ldflags="-s -w" -o /app/gitea-matrix-bot .
 
 
 FROM scratch
@@ -24,6 +24,6 @@ COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /usr/share/zoneinfo/Asia/S
 ENV TZ Asia/Shanghai
 
 WORKDIR /app
-COPY --from=builder /app/main /app/main
+COPY --from=builder /app/gitea-matrix-bot /app/gitea-matrix-bot
 
-CMD ["./main"]
+CMD ["./gitea-matrix-bot"]
