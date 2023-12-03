@@ -3,7 +3,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strconv"
 	"strings"
@@ -32,7 +32,7 @@ func setupListener() {
 func PostHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "POST" {
-		body, err := ioutil.ReadAll(r.Body)
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "Error reading request body",
 				http.StatusInternalServerError)
@@ -80,7 +80,7 @@ func PostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-//generateTextMessage generates the message string for a given event
+// generateTextMessage generates the message string for a given event
 func generateHTMLMessage(data GiteaPostData, eventHeader string) (string, error) {
 
 	templHeader := `<h3><a href="{{.Repository.HTMLURL}}"><b><span data-mx-color="#000000">[{{.Repository.FullName}}]</span></b></a></h3>`
@@ -170,7 +170,7 @@ func generateHTMLMessage(data GiteaPostData, eventHeader string) (string, error)
 	return tpl.String(), nil
 }
 
-//generateTextMessage generates the message string for a given event
+// generateTextMessage generates the message string for a given event
 func generateTextMessage(data GiteaPostData, eventHeader string) (string, error) {
 
 	templ := template.New("notification")

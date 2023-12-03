@@ -2,8 +2,10 @@ package main
 
 import (
 	// "fmt"
-	"github.com/go-ini/ini"
+	"os"
+
 	"github.com/alecthomas/kingpin/v2"
+	"github.com/go-ini/ini"
 
 	"time"
 	// "time"
@@ -51,6 +53,20 @@ func init() {
 	matrixHost := cfg.Section("matrix").Key("matrix_host").String()
 	dbPath := cfg.Section("bot").Key("db_path").String()
 
+	matrixUserEnv := os.Getenv("MATRIX_USER")
+	if matrixUserEnv != "" {
+		matrixUser = matrixUserEnv
+	}
+
+	matrixPassEnv := os.Getenv("MATRIX_PASS")
+	if matrixPassEnv != "" {
+		matrixPass = matrixPassEnv
+	}
+
+	matrixHostEnv := os.Getenv("MATRIX_HOST") // 新增
+	if matrixHostEnv != "" {
+		matrixHost = matrixHostEnv
+	}
 	//Set up the bot
 
 	// func NewGiteaBot(user, pass, host, string, DBPath string) *GiteaBot {
