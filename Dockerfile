@@ -14,7 +14,7 @@ ADD go.mod .
 ADD go.sum .
 RUN go mod download
 COPY . .
-RUN go build -ldflags="-s -w" -a -installsuffix cgo -o /app/gitea-matrix-bot .
+RUN go build -a -installsuffix cgo -ldflags="-s -w"  -o /app/gitea-matrix-bot .
 
 
 FROM alpine:latest  
